@@ -14,6 +14,8 @@ import {
   BarChart3,
   Settings,
   ScrollText,
+  Wheat,
+  ChefHat,
   type LucideIcon,
 } from "lucide-react";
 import type { Role } from "@/shared/types/entities";
@@ -25,7 +27,7 @@ export interface NavItem {
   roles?: Role[];
 }
 
-/** Módulos implementados en la Fase 1. */
+/** Módulos implementados (Fases 1 y 2). */
 export const NAV_ITEMS: NavItem[] = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
   {
@@ -33,6 +35,19 @@ export const NAV_ITEMS: NavItem[] = [
     label: "Sucursales",
     icon: Store,
     roles: ["SUPER_ADMIN", "ADMIN_SUCURSAL"],
+  },
+  { href: "/catalogo", label: "Catálogo", icon: Tags, roles: ["SUPER_ADMIN", "ADMIN_SUCURSAL"] },
+  {
+    href: "/insumos",
+    label: "Insumos",
+    icon: Wheat,
+    roles: ["SUPER_ADMIN", "ADMIN_SUCURSAL", "PRODUCCION"],
+  },
+  {
+    href: "/recetas",
+    label: "Recetas",
+    icon: ChefHat,
+    roles: ["SUPER_ADMIN", "ADMIN_SUCURSAL", "PRODUCCION"],
   },
   { href: "/usuarios", label: "Usuarios", icon: Users, roles: ["SUPER_ADMIN"] },
 ];
@@ -45,7 +60,6 @@ export const UPCOMING_ITEMS: NavItem[] = [
   { href: "/inventario", label: "Inventario", icon: Package },
   { href: "/produccion", label: "Producción", icon: Factory },
   { href: "/transferencias", label: "Transferencias", icon: Truck },
-  { href: "/catalogo", label: "Catálogo", icon: Tags },
   { href: "/clientes", label: "Clientes", icon: UserRound },
   { href: "/compras", label: "Compras", icon: ClipboardList },
   { href: "/gastos", label: "Gastos", icon: Receipt },

@@ -90,6 +90,13 @@ supabase db reset            # aplica migraciones + seed.sql
 # o, manualmente, ejecutar supabase/seed.sql en el SQL Editor.
 ```
 
+### Imágenes (Storage)
+
+La migración 4 crea el bucket público `productos` para las imágenes del catálogo
+(límite 5 MB, `image/png|jpeg|webp`), con lectura pública y escritura solo para
+usuarios autenticados. Si el bucket no existe (por ejemplo al usar un proyecto ya
+creado), vuelve a aplicar `supabase/migrations/20260101000004_storage.sql`.
+
 ### Crear el primer SUPER_ADMIN
 
 Las cuentas nuevas se crean con rol `VENDEDOR_SOLO_LECTURA` (mínimo privilegio).
