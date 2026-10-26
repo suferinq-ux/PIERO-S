@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================================================
+   PIERO'S — Tokens de identidad visual (paleta rosa)
+   Edita aquí para cambiar la paleta. Los valores usan HSL.
+   ============================================================================= */
+@layer base {
+  :root {
+    /* Marca */
+    --primary: 342 75% 62%; /* #E75480 rosa primario */
+    --primary-soft: 340 80% 94%; /* #FCE4EC rosa suave */
+    --primary-dark: 343 54% 43%; /* #A83254 rosa oscuro */
+    --warm-foreground: 340 11% 33%; /* #5C4A50 gris cálido */
+
+    /* Sistema (shadcn/ui) */
+    --background: 0 0% 100%; /* #FFFFFF */
+    --foreground: 343 54% 43%; /* rosa oscuro para títulos/acentos */
+    --card: 0 0% 100%;
+    --card-foreground: 343 54% 43%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 343 54% 43%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 340 80% 94%;
+    --secondary-foreground: 343 54% 43%;
+    --muted: 340 80% 96%;
+    --muted-foreground: 340 11% 33%;
+    --accent: 340 80% 94%;
+    --accent-foreground: 343 54% 43%;
+    --destructive: 347 77% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 342 55% 90%;
+    --input: 342 55% 88%;
+    --ring: 342 75% 62%;
+    --radius: 0.75rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-sans), system-ui, sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading), var(--font-sans), sans-serif;
+    @apply tracking-tight;
+  }
+}
+
+@layer utilities {
+  /* Contraste AA garantizado para textos secundarios */
+  .text-warm {
+    color: hsl(var(--warm-foreground));
+  }
+  .bg-soft {
+    background-color: hsl(var(--primary-soft));
+  }
+}
