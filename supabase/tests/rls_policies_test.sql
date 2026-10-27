@@ -6,7 +6,6 @@
 -- =============================================================================
 
 begin;
-select plan(1);
 select * from no_plan();
 
 -- 1. Tablas con Row Level Security activada

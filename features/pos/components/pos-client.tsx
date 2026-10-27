@@ -39,6 +39,10 @@ import type {
 } from "@/features/ventas/types";
 import type { Customer, Role } from "@/shared/types/entities";
 import type { ProductWithDetails } from "@/features/catalogo/types";
+import type { RegistrarVentaInput } from "@/features/ventas/repository";
+import { useOfflineQueue } from "@/lib/offline/use-offline-queue";
+import { enqueueSale } from "@/lib/offline/db";
+import { isNetworkError } from "@/lib/offline/sync";
 
 const PAYMENT_METHODS: { id: PaymentMethod; label: string }[] = [
   { id: "EFECTIVO", label: "Efectivo" },
@@ -56,6 +60,7 @@ interface LastSale {
 
 export function PosClient({ role }: { role: Role }) {
   const canDiscount = role === "SUPER_ADMIN" || role === "ADMIN_SUCURSAL";
+  const { pending, syncing, flush, refresh } = useOfflineQueue();
 
   const [branchId, setBranchId] = useState("");
   const [search, setSearch] = useState("");
@@ -196,11 +201,18 @@ export function PosClient({ role }: { role: Role }) {
             </SelectContent>
           </Select>
         </div>
-        {tab === "vender" && (
-          <Badge variant={openRegister ? "soft" : "destructive"}>
-            {openRegister ? "Caja abierta" : "Sin caja abierta"}
-          </Badge>
-        )}
+        <div className="flex items-center gap-2">
+          {pending > 0 && (
+            <Button variant="outline" size="sm" onClick={() => flush()} disabled={syncing}>
+              {syncing ? "Sincronizando…" : `${pending} pendiente${pending === 1 ? "" : "s"}`}
+            </Button>
+          )}
+          {tab === "vender" && (
+            <Badge variant={openRegister ? "soft" : "destructive"}>
+              {openRegister ? "Caja abierta" : "Sin caja abierta"}
+            </Badge>
+          )}
+        </div>
       </div>
 
       {tab === "ventas" ? (
@@ -254,6 +266,7 @@ export function PosClient({ role }: { role: Role }) {
               return (
                 <button
                   key={product.id}
+                  data-testid="pos-product"
                   onClick={() => handleProductClick(product)}
                   className="flex flex-col rounded-xl border bg-card p-3 text-left shadow-card transition-colors hover:border-primary"
                 >
@@ -293,6 +306,7 @@ export function PosClient({ role }: { role: Role }) {
       {/* Botón flotante del carrito */}
       {cart.length > 0 && tab === "vender" && (
         <button
+          data-testid="pos-cart"
           onClick={() => setCheckoutOpen(true)}
           className="fixed bottom-5 right-5 z-40 flex items-center gap-2 rounded-full bg-primary px-5 py-3.5 font-semibold text-primary-foreground shadow-lg"
         >
@@ -345,6 +359,13 @@ export function PosClient({ role }: { role: Role }) {
           setLastSale({ result: sale, items, payments, change });
           setCheckoutOpen(false);
         }}
+        onOffline={async (payload) => {
+          await enqueueSale(payload);
+          await refresh();
+          setCart([]);
+          setCheckoutOpen(false);
+          toast.success("Sin conexión: venta guardada y se sincronizará automáticamente");
+        }}
       />
 
       {/* Recibo */}
@@ -363,6 +384,7 @@ function CheckoutDialog({
   customers,
   onChangeQty,
   onPaid,
+  onOffline,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -373,6 +395,7 @@ function CheckoutDialog({
   customers: Customer[];
   onChangeQty: (key: string, delta: number) => void;
   onPaid: (sale: SaleResult, items: CartItem[], payments: PaymentInput[], change: number) => void;
+  onOffline: (payload: RegistrarVentaInput) => Promise<void>;
 }) {
   const queryClient = useQueryClient();
   const [descuento, setDescuento] = useState(0);
@@ -402,7 +425,13 @@ function CheckoutDialog({
       }
       onPaid(sale, cart, payments, changeToApply);
     },
-    onError: (err: Error) => toast.error(err.message),
+    onError: (err: Error, variables) => {
+      if (isNetworkError(err)) {
+        void onOffline(variables);
+      } else {
+        toast.error(err.message);
+      }
+    },
   });
 
   function quickPay(method: PaymentMethod) {
@@ -616,7 +645,11 @@ function CheckoutDialog({
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancelar
           </Button>
-          <Button onClick={cobrar} disabled={!isExact || registrar.isPending || cart.length === 0}>
+          <Button
+            data-testid="pos-cobrar"
+            onClick={cobrar}
+            disabled={!isExact || registrar.isPending || cart.length === 0}
+          >
             {registrar.isPending ? "Cobrando…" : `Cobrar ${formatPEN(total)}`}
           </Button>
         </DialogFooter>

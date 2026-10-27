@@ -17,6 +17,8 @@ export const metadata: Metadata = {
   },
   description:
     "Sistema de gestión multisucursal para la pastelería PIERO'S (Ayacucho, Perú): ventas, inventario, caja, pedidos y reportes.",
+  manifest: "/manifest.webmanifest",
+  applicationName: "PIERO'S",
 };
 
 export const viewport: Viewport = {

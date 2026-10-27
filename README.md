@@ -115,6 +115,18 @@ supabase db reset            # aplica migraciones + seed.sql
 # o, manualmente, ejecutar supabase/seed.sql en el SQL Editor.
 ```
 
+### Schema único
+
+`supabase/schema.sql` es el **esquema completo generado** (tablas, enums,
+funciones, RLS, triggers y Storage). Sirve para pegar en el SQL Editor de una
+sola vez. Se regenera desde las migraciones con:
+
+```bash
+npm run schema
+```
+
+Ver `docs/DESPLIEGUE.md` para la guía completa de despliegue.
+
 ### Operaciones transaccionales (RPC)
 
 Las operaciones críticas —ajuste de stock, mermas, envío/recepción de

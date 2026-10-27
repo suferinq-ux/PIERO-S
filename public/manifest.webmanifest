@@ -1,0 +1,20 @@
+{
+  "name": "PIERO'S — Gestión de pastelería",
+  "short_name": "PIERO'S",
+  "description": "Sistema de gestión multisucursal para la pastelería PIERO'S (Ayacucho, Perú).",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFFFFF",
+  "theme_color": "#E75480",
+  "lang": "es-PE",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

@@ -119,3 +119,20 @@ insert into public.business_settings (key, value) values
   ('impuestos', '{"igv_enabled": false, "igv_rate": 0.18}'::jsonb),
   ('ticket', '{"ancho_mm": 80, "pie": "Gracias por su compra"}'::jsonb)
 on conflict (key) do nothing;
+
+-- Stock inicial de ejemplo (permite probar POS, inventario y reportes) -----
+insert into public.stock_levels (branch_id, item_type, item_id, quantity)
+select b.id, 'INSUMO'::public.inventory_item_type, s.id, 50
+from public.branches b
+cross join public.supplies s
+where b.id in ('10000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000002')
+  and s.is_active
+on conflict (branch_id, item_type, item_id) do nothing;
+
+insert into public.stock_levels (branch_id, item_type, item_id, quantity)
+select b.id, 'PRODUCTO'::public.inventory_item_type, p.id, 100
+from public.branches b
+cross join public.products p
+where b.id in ('10000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000002')
+  and p.is_active
+on conflict (branch_id, item_type, item_id) do nothing;
