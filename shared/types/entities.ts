@@ -82,3 +82,24 @@ export interface RecipeItem {
   supply_id: string;
   cantidad: number;
 }
+
+export interface Customer {
+  id: string;
+  nombre: string;
+  telefono: string | null;
+  email: string | null;
+  fecha_nacimiento: string | null;
+  puntos: number;
+  notas: string | null;
+  created_at: string;
+}
+
+export interface Supplier {
+  id: string;
+  nombre: string;
+  ruc: string | null;
+  telefono: string | null;
+  email: string | null;
+  direccion: string | null;
+  is_active: boolean;
+}

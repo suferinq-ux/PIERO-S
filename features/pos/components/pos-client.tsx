@@ -29,6 +29,7 @@ import { cn } from "@/shared/lib/utils";
 import { roundMoney, calcChange } from "@/domain/pricing";
 import { catalogRepository } from "@/features/catalogo/repository";
 import { ventaRepository } from "@/features/ventas/repository";
+import { customerRepository } from "@/features/clientes/repository";
 import type {
   CartItem,
   ConsumptionType,
@@ -36,7 +37,7 @@ import type {
   PaymentMethod,
   SaleResult,
 } from "@/features/ventas/types";
-import type { Role } from "@/shared/types/entities";
+import type { Customer, Role } from "@/shared/types/entities";
 import type { ProductWithDetails } from "@/features/catalogo/types";
 
 const PAYMENT_METHODS: { id: PaymentMethod; label: string }[] = [
@@ -76,6 +77,10 @@ export function PosClient({ role }: { role: Role }) {
   const { data: products = [], isLoading } = useQuery({
     queryKey: ["pos-products"],
     queryFn: catalogRepository.listProducts,
+  });
+  const { data: customers = [] } = useQuery({
+    queryKey: ["pos-customers"],
+    queryFn: customerRepository.list,
   });
 
   const activeBranchId = branchId || branches[0]?.id || "";
@@ -333,6 +338,7 @@ export function PosClient({ role }: { role: Role }) {
         cart={cart}
         subtotal={subtotal}
         canDiscount={canDiscount}
+        customers={customers}
         onChangeQty={changeQty}
         onPaid={(sale, items, payments, change) => {
           setCart([]);
@@ -354,6 +360,7 @@ function CheckoutDialog({
   cart,
   subtotal,
   canDiscount,
+  customers,
   onChangeQty,
   onPaid,
 }: {
@@ -363,13 +370,16 @@ function CheckoutDialog({
   cart: CartItem[];
   subtotal: number;
   canDiscount: boolean;
+  customers: Customer[];
   onChangeQty: (key: string, delta: number) => void;
   onPaid: (sale: SaleResult, items: CartItem[], payments: PaymentInput[], change: number) => void;
 }) {
+  const queryClient = useQueryClient();
   const [descuento, setDescuento] = useState(0);
   const [tipoConsumo, setTipoConsumo] = useState<ConsumptionType>("LOCAL");
   const [payments, setPayments] = useState<PaymentInput[]>([]);
   const [recibido, setRecibido] = useState<number>(0);
+  const [customerId, setCustomerId] = useState("");
 
   const total = roundMoney(Math.max(0, subtotal - descuento));
   const paid = roundMoney(payments.reduce((a, p) => a + p.amount, 0));
@@ -383,6 +393,13 @@ function CheckoutDialog({
     mutationFn: ventaRepository.registrar,
     onSuccess: (sale) => {
       const changeToApply = isSingleEfectivo ? change : 0;
+      if (customerId) {
+        const points = Math.floor(total / 10);
+        customerRepository
+          .addPoints(customerId, points)
+          .then(() => queryClient.invalidateQueries({ queryKey: ["pos-customers"] }))
+          .catch(() => undefined);
+      }
       onPaid(sale, cart, payments, changeToApply);
     },
     onError: (err: Error) => toast.error(err.message),
@@ -412,6 +429,7 @@ function CheckoutDialog({
       payments,
       descuento,
       tipo_consumo: tipoConsumo,
+      customer_id: customerId || null,
       notas: null,
     });
   }
@@ -504,6 +522,24 @@ function CheckoutDialog({
               <SelectContent>
                 <SelectItem value="LOCAL">En local</SelectItem>
                 <SelectItem value="PARA_LLEVAR">Para llevar</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Cliente (opcional) */}
+          <div className="space-y-1">
+            <Label>Cliente (opcional)</Label>
+            <Select value={customerId} onValueChange={setCustomerId}>
+              <SelectTrigger>
+                <SelectValue placeholder="Sin cliente" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="">Sin cliente</SelectItem>
+                {customers.map((c) => (
+                  <SelectItem key={c.id} value={c.id}>
+                    {c.nombre}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>

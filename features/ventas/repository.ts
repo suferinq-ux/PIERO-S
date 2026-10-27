@@ -7,6 +7,7 @@ export interface RegistrarVentaInput {
   payments: PaymentInput[];
   descuento: number;
   tipo_consumo: "LOCAL" | "PARA_LLEVAR";
+  customer_id: string | null;
   notas: string | null;
 }
 
@@ -23,7 +24,7 @@ export const ventaRepository = {
       p_payments: input.payments,
       p_descuento: input.descuento,
       p_tipo_consumo: input.tipo_consumo,
-      p_customer_id: null,
+      p_customer_id: input.customer_id,
       p_notas: input.notas,
     });
     if (error) throw new Error(error.message);

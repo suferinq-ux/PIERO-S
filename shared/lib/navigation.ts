@@ -79,15 +79,35 @@ export const NAV_ITEMS: NavItem[] = [
     icon: Receipt,
     roles: ["SUPER_ADMIN", "ADMIN_SUCURSAL", "CAJERO"],
   },
+  {
+    href: "/pedidos",
+    label: "Pedidos",
+    icon: Cake,
+    roles: ["SUPER_ADMIN", "ADMIN_SUCURSAL", "CAJERO"],
+  },
+  {
+    href: "/clientes",
+    label: "Clientes",
+    icon: UserRound,
+    roles: ["SUPER_ADMIN", "ADMIN_SUCURSAL", "CAJERO"],
+  },
+  {
+    href: "/compras",
+    label: "Compras",
+    icon: ClipboardList,
+    roles: ["SUPER_ADMIN", "ADMIN_SUCURSAL"],
+  },
+  {
+    href: "/gastos",
+    label: "Gastos",
+    icon: Receipt,
+    roles: ["SUPER_ADMIN", "ADMIN_SUCURSAL"],
+  },
   { href: "/usuarios", label: "Usuarios", icon: Users, roles: ["SUPER_ADMIN"] },
 ];
 
 /** Módulos de fases posteriores (se muestran como "próximamente"). */
 export const UPCOMING_ITEMS: NavItem[] = [
-  { href: "/pedidos", label: "Pedidos", icon: Cake },
-  { href: "/clientes", label: "Clientes", icon: UserRound },
-  { href: "/compras", label: "Compras", icon: ClipboardList },
-  { href: "/gastos", label: "Gastos", icon: Receipt },
   { href: "/reportes", label: "Reportes", icon: BarChart3 },
   { href: "/configuracion", label: "Configuración", icon: Settings },
   { href: "/auditoria", label: "Auditoría", icon: ScrollText },
