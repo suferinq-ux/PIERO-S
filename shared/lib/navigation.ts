@@ -67,14 +67,24 @@ export const NAV_ITEMS: NavItem[] = [
     icon: Factory,
     roles: ["SUPER_ADMIN", "ADMIN_SUCURSAL", "PRODUCCION"],
   },
+  {
+    href: "/pos",
+    label: "Punto de venta",
+    icon: ShoppingCart,
+    roles: ["SUPER_ADMIN", "ADMIN_SUCURSAL", "CAJERO"],
+  },
+  {
+    href: "/caja",
+    label: "Caja",
+    icon: Receipt,
+    roles: ["SUPER_ADMIN", "ADMIN_SUCURSAL", "CAJERO"],
+  },
   { href: "/usuarios", label: "Usuarios", icon: Users, roles: ["SUPER_ADMIN"] },
 ];
 
 /** Módulos de fases posteriores (se muestran como "próximamente"). */
 export const UPCOMING_ITEMS: NavItem[] = [
-  { href: "/pos", label: "Punto de venta", icon: ShoppingCart },
   { href: "/pedidos", label: "Pedidos", icon: Cake },
-  { href: "/caja", label: "Caja", icon: Receipt },
   { href: "/clientes", label: "Clientes", icon: UserRound },
   { href: "/compras", label: "Compras", icon: ClipboardList },
   { href: "/gastos", label: "Gastos", icon: Receipt },

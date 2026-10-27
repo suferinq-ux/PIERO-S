@@ -3,6 +3,7 @@ import {
   calcSubtotal,
   calcTotal,
   calcIgv,
+  calcChange,
   lineSubtotal,
   applyDiscount,
   roundMoney,
@@ -72,5 +73,15 @@ describe("pricing — IGV", () => {
     });
     // base 90 + IGV 16.2 = 106.2
     expect(total).toBe(106.2);
+  });
+});
+
+describe("pricing — vuelto", () => {
+  it("calcula el vuelto correctamente", () => {
+    expect(calcChange(50, 37.5)).toBe(12.5);
+  });
+
+  it("no devuelve vuelto negativo si el pago es insuficiente", () => {
+    expect(calcChange(10, 20)).toBe(0);
   });
 });

@@ -55,3 +55,8 @@ export function calcTotal(
   const total = roundMoney(base + igv);
   return { subtotal, discount, igv, total };
 }
+
+/** Vuelto a devolver cuando el cliente paga en efectivo. */
+export function calcChange(amountPaid: number, total: number): number {
+  return roundMoney(Math.max(0, amountPaid - total));
+}

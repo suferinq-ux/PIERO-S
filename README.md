@@ -93,10 +93,11 @@ supabase db reset            # aplica migraciones + seed.sql
 ### Operaciones transaccionales (RPC)
 
 Las operaciones críticas —ajuste de stock, mermas, envío/recepción de
-transferencias y completar producción— son funciones PostgreSQL atómicas
-(`supabase/migrations/20260101000005_rpc_inventario.sql`) que validan rol y
-sucursal internamente y actualizan stock, kardex y auditoría en una sola
-transacción. Se invocan desde la app con `supabase.rpc(...)`.
+transferencias, completar producción, registrar/anular venta y apertura/cierre
+de caja— son funciones PostgreSQL atómicas (migraciones
+`20260101000005_rpc_inventario.sql` y `20260101000006_rpc_ventas_caja.sql`) que
+validan rol y sucursal internamente y actualizan stock, kardex, caja y auditoría
+en una sola transacción. Se invocan desde la app con `supabase.rpc(...)`.
 
 ### Imágenes (Storage)
 
