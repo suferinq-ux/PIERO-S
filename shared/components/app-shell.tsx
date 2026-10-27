@@ -62,23 +62,27 @@ function NavList({ role }: { role: UserProfile["role"] }) {
         );
       })}
 
-      <p className="mt-4 px-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-        Próximamente
-      </p>
-      {UPCOMING_ITEMS.map((item) => {
-        const Icon = item.icon;
-        return (
-          <div
-            key={item.href}
-            className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-muted-foreground"
-            aria-disabled="true"
-          >
-            <Icon className="h-5 w-5" />
-            {item.label}
-            <Clock className="ml-auto h-4 w-4 opacity-60" />
-          </div>
-        );
-      })}
+      {UPCOMING_ITEMS.length > 0 && (
+        <>
+          <p className="mt-4 px-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Próximamente
+          </p>
+          {UPCOMING_ITEMS.map((item) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={item.href}
+                className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-muted-foreground"
+                aria-disabled="true"
+              >
+                <Icon className="h-5 w-5" />
+                {item.label}
+                <Clock className="ml-auto h-4 w-4 opacity-60" />
+              </div>
+            );
+          })}
+        </>
+      )}
     </nav>
   );
 }

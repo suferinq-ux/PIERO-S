@@ -103,15 +103,29 @@ export const NAV_ITEMS: NavItem[] = [
     icon: Receipt,
     roles: ["SUPER_ADMIN", "ADMIN_SUCURSAL"],
   },
+  {
+    href: "/reportes",
+    label: "Reportes",
+    icon: BarChart3,
+    roles: ["SUPER_ADMIN", "ADMIN_SUCURSAL"],
+  },
+  {
+    href: "/auditoria",
+    label: "Auditoría",
+    icon: ScrollText,
+    roles: ["SUPER_ADMIN", "ADMIN_SUCURSAL"],
+  },
+  {
+    href: "/configuracion",
+    label: "Configuración",
+    icon: Settings,
+    roles: ["SUPER_ADMIN"],
+  },
   { href: "/usuarios", label: "Usuarios", icon: Users, roles: ["SUPER_ADMIN"] },
 ];
 
 /** Módulos de fases posteriores (se muestran como "próximamente"). */
-export const UPCOMING_ITEMS: NavItem[] = [
-  { href: "/reportes", label: "Reportes", icon: BarChart3 },
-  { href: "/configuracion", label: "Configuración", icon: Settings },
-  { href: "/auditoria", label: "Auditoría", icon: ScrollText },
-];
+export const UPCOMING_ITEMS: NavItem[] = [];
 
 /** Filtra los ítems según el rol del usuario (sin roles => visible para todos). */
 export function filterNavByRole(items: NavItem[], role: Role): NavItem[] {

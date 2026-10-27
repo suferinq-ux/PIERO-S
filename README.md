@@ -36,6 +36,31 @@ paleta, edita ese único archivo (y su espejo en `tailwind.config.ts`).
 Tipografía: **Poppins** (títulos) e **Inter** (texto), cargadas vía
 `next/font/google`.
 
+## Módulos implementados
+
+| Módulo                                                         | Ruta                   | Estado |
+| -------------------------------------------------------------- | ---------------------- | ------ |
+| Autenticación, roles y usuarios                                | `/login`, `/usuarios`  | ✅     |
+| Dashboard (KPIs, tendencia, stock bajo)                        | `/`                    | ✅     |
+| Sucursales                                                     | `/sucursales`          | ✅     |
+| Catálogo (categorías, productos, variantes, precios, imágenes) | `/catalogo`            | ✅     |
+| Insumos y recetas (costo y margen)                             | `/insumos`, `/recetas` | ✅     |
+| Inventario (stock, kardex, ajustes, mermas)                    | `/inventario`          | ✅     |
+| Transferencias entre sucursales                                | `/transferencias`      | ✅     |
+| Producción diaria                                              | `/produccion`          | ✅     |
+| Punto de venta (POS) y ticket 80 mm                            | `/pos`                 | ✅     |
+| Caja (apertura, movimientos, arqueo)                           | `/caja`                | ✅     |
+| Pedidos por encargo                                            | `/pedidos`             | ✅     |
+| Clientes (fidelización y cumpleaños)                           | `/clientes`            | ✅     |
+| Compras y proveedores                                          | `/compras`             | ✅     |
+| Gastos                                                         | `/gastos`              | ✅     |
+| Reportes (Excel/PDF)                                           | `/reportes`            | ✅     |
+| Auditoría                                                      | `/auditoria`           | ✅     |
+| Configuración                                                  | `/configuracion`       | ✅     |
+
+> **Pendiente (Fase 7):** pruebas E2E completas (venta, cierre, transferencia),
+> modo offline con cola de sincronización y despliegue final.
+
 ## Requisitos previos
 
 - Node.js 20+ y npm
