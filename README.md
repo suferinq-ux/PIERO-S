@@ -90,6 +90,14 @@ supabase db reset            # aplica migraciones + seed.sql
 # o, manualmente, ejecutar supabase/seed.sql en el SQL Editor.
 ```
 
+### Operaciones transaccionales (RPC)
+
+Las operaciones críticas —ajuste de stock, mermas, envío/recepción de
+transferencias y completar producción— son funciones PostgreSQL atómicas
+(`supabase/migrations/20260101000005_rpc_inventario.sql`) que validan rol y
+sucursal internamente y actualizan stock, kardex y auditoría en una sola
+transacción. Se invocan desde la app con `supabase.rpc(...)`.
+
 ### Imágenes (Storage)
 
 La migración 4 crea el bucket público `productos` para las imágenes del catálogo

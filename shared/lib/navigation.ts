@@ -49,6 +49,24 @@ export const NAV_ITEMS: NavItem[] = [
     icon: ChefHat,
     roles: ["SUPER_ADMIN", "ADMIN_SUCURSAL", "PRODUCCION"],
   },
+  {
+    href: "/inventario",
+    label: "Inventario",
+    icon: Package,
+    roles: ["SUPER_ADMIN", "ADMIN_SUCURSAL", "PRODUCCION"],
+  },
+  {
+    href: "/transferencias",
+    label: "Transferencias",
+    icon: Truck,
+    roles: ["SUPER_ADMIN", "ADMIN_SUCURSAL", "PRODUCCION"],
+  },
+  {
+    href: "/produccion",
+    label: "Producción",
+    icon: Factory,
+    roles: ["SUPER_ADMIN", "ADMIN_SUCURSAL", "PRODUCCION"],
+  },
   { href: "/usuarios", label: "Usuarios", icon: Users, roles: ["SUPER_ADMIN"] },
 ];
 
@@ -57,9 +75,6 @@ export const UPCOMING_ITEMS: NavItem[] = [
   { href: "/pos", label: "Punto de venta", icon: ShoppingCart },
   { href: "/pedidos", label: "Pedidos", icon: Cake },
   { href: "/caja", label: "Caja", icon: Receipt },
-  { href: "/inventario", label: "Inventario", icon: Package },
-  { href: "/produccion", label: "Producción", icon: Factory },
-  { href: "/transferencias", label: "Transferencias", icon: Truck },
   { href: "/clientes", label: "Clientes", icon: UserRound },
   { href: "/compras", label: "Compras", icon: ClipboardList },
   { href: "/gastos", label: "Gastos", icon: Receipt },
