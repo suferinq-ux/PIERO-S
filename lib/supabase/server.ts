@@ -1,10 +1,16 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import { createDemoClient, isDemoMode } from "./demo-client";
 
 type CookieToSet = { name: string; value: string; options: CookieOptions };
 
 /** Cliente de Supabase para Server Components / Route Handlers. */
-export async function createClient() {
+export async function createClient(): Promise<SupabaseClient> {
+  if (isDemoMode()) {
+    return createDemoClient() as unknown as SupabaseClient;
+  }
+
   const cookieStore = await cookies();
 
   return createServerClient(

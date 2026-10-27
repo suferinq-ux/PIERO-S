@@ -8,6 +8,11 @@ type CookieToSet = { name: string; value: string; options: CookieOptions };
  * autenticadas. Se registra en `middleware.ts`.
  */
 export async function updateSession(request: NextRequest) {
+  // Modo demo: sin Supabase, se permite el acceso a toda la app.
+  if (process.env.NEXT_PUBLIC_DEMO_MODE === "1") {
+    return NextResponse.next();
+  }
+
   let supabaseResponse = NextResponse.next({ request });
 
   const supabase = createServerClient(
