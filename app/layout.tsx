@@ -12,8 +12,8 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: {
-    default: "PIERO'S — Gestión de pastelería",
-    template: "%s · PIERO'S",
+    default: "PIERO'S",
+    template: "PIERO'S",
   },
   description:
     "Sistema de gestión multisucursal para la pastelería PIERO'S (Ayacucho, Perú): ventas, inventario, caja, pedidos y reportes.",

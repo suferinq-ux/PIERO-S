@@ -117,7 +117,10 @@ function ShellSkeleton() {
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const pathname = usePathname();
   const { profile, branches, isLoading } = useSession();
+  const activeLabel =
+    [...NAV_ITEMS, ...UPCOMING_ITEMS].find((i) => i.href === pathname)?.label ?? "PIERO'S";
 
   useEffect(() => {
     if (!isLoading && !profile) router.replace("/login");
@@ -198,8 +201,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               </SheetContent>
             </Sheet>
 
-            {/* Marca en la barra superior (dorada) */}
-            <Brand markClassName="h-8 w-8 text-base" nameClassName="text-base" />
+            {/* Título del módulo en la barra superior */}
+            <h1 className="font-heading text-base font-semibold sm:text-lg">{activeLabel}</h1>
           </div>
 
           <div className="flex items-center gap-2">
