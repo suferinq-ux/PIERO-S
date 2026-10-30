@@ -13,6 +13,8 @@
     --primary-soft: 340 80% 94%; /* #FCE4EC rosa suave */
     --primary-dark: 343 54% 43%; /* #A83254 rosa oscuro */
     --warm-foreground: 340 11% 33%; /* #5C4A50 gris cálido */
+    --gold: 46 65% 52%; /* #D4AF37 dorado */
+    --gold-dark: 45 100% 33%; /* #A67C00 dorado oscuro (texto) */
 
     /* Sistema (shadcn/ui) */
     --background: 0 0% 100%; /* #FFFFFF */

@@ -189,6 +189,14 @@ export function createDemoClient() {
         data: { user: { id: DEMO_USER_ID, email: "demo@pieros.pe" } },
         error: null,
       }),
+      getSession: async () => ({
+        data: { session: { user: { id: DEMO_USER_ID, email: "demo@pieros.pe" } } },
+        error: null,
+      }),
+      getClaims: async () => ({
+        data: { claims: { sub: DEMO_USER_ID, email: "demo@pieros.pe" } },
+        error: null,
+      }),
       signInWithPassword: async () => ({ error: null }),
       signOut: async () => ({ error: null }),
       resetPasswordForEmail: async () => ({ error: null }),

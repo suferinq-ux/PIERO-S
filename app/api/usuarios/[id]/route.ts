@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { requireSuperAdmin } from "@/lib/auth/require-super-admin";
 import { updateUserSchema } from "@/features/usuarios/schemas";
 
 /**
@@ -7,6 +8,11 @@ import { updateUserSchema } from "@/features/usuarios/schemas";
  * se usa en el servidor; el trigger protect_role permite el cambio por servicio.
  */
 export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  const auth = await requireSuperAdmin();
+  if (!auth.ok) {
+    return NextResponse.json({ error: auth.error }, { status: auth.status });
+  }
+
   const { id } = await params;
   const body = await request.json().catch(() => null);
   const parsed = updateUserSchema.safeParse(body);

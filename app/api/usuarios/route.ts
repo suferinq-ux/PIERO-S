@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { requireSuperAdmin } from "@/lib/auth/require-super-admin";
 import { createUserSchema } from "@/features/usuarios/schemas";
 
 /**
@@ -7,6 +8,11 @@ import { createUserSchema } from "@/features/usuarios/schemas";
  * Usa la service_role key SOLO en el servidor.
  */
 export async function POST(request: Request) {
+  const auth = await requireSuperAdmin();
+  if (!auth.ok) {
+    return NextResponse.json({ error: auth.error }, { status: auth.status });
+  }
+
   const body = await request.json().catch(() => null);
   const parsed = createUserSchema.safeParse(body);
   if (!parsed.success) {

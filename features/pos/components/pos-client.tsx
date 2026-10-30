@@ -40,6 +40,7 @@ import type {
 import type { Customer, Role } from "@/shared/types/entities";
 import type { ProductWithDetails } from "@/features/catalogo/types";
 import type { RegistrarVentaInput } from "@/features/ventas/repository";
+import { useSession } from "@/shared/hooks/use-session";
 import { useOfflineQueue } from "@/lib/offline/use-offline-queue";
 import { enqueueSale } from "@/lib/offline/db";
 import { isNetworkError } from "@/lib/offline/sync";
@@ -58,7 +59,9 @@ interface LastSale {
   change: number;
 }
 
-export function PosClient({ role }: { role: Role }) {
+export function PosClient() {
+  const { profile } = useSession();
+  const role = profile?.role ?? "VENDEDOR_SOLO_LECTURA";
   const canDiscount = role === "SUPER_ADMIN" || role === "ADMIN_SUCURSAL";
   const { pending, syncing, flush, refresh } = useOfflineQueue();
 

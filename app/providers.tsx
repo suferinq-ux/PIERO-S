@@ -11,7 +11,14 @@ export function Providers({ children }: { children: React.ReactNode }) {
     () =>
       new QueryClient({
         defaultOptions: {
-          queries: { staleTime: 30_000, retry: 1, refetchOnWindowFocus: false },
+          queries: {
+            // Cachea los datos para que volver a un módulo sea instantáneo.
+            staleTime: 5 * 60_000,
+            gcTime: 30 * 60_000,
+            refetchOnWindowFocus: false,
+            refetchOnMount: false,
+            retry: 1,
+          },
         },
       }),
   );

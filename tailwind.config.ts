@@ -52,6 +52,10 @@ const config: Config = {
           dark: "hsl(var(--primary-dark))",
           warm: "hsl(var(--warm-foreground))",
         },
+        gold: {
+          DEFAULT: "hsl(var(--gold))",
+          dark: "hsl(var(--gold-dark))",
+        },
       },
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
