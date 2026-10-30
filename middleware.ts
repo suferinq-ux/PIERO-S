@@ -11,6 +11,6 @@ export const config = {
      * Excluye recursos estáticos y archivos de imagen.
      * Cubre el resto de rutas de la app.
      */
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    "/((?!_next/static|_next/image|favicon.ico|manifest.webmanifest|sw.js|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };
